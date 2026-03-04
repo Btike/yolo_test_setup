@@ -17,6 +17,39 @@ La idea no fue “state of the art”, sino demostrar que puedo moverme en el pi
 - Descargué `best.pt` y corrí inferencia local en macOS (M1).
 
 ---
+## Qué contiene este repo (archivos y carpetas)
+- `best.pt`: pesos del modelo entrenado (checkpoint “mejor” según validación). Se usa para inferencia local.
+- `labels/`: anotaciones en formato YOLO (un `.txt` por imagen). Cada línea es: `class x_center y_center width height` (valores normalizados entre 0 y 1).
+- `classes.txt`: lista de clases (en este caso, solo `Tomato`).
+- `results/` (o `camera_results/`): outputs de la demo (video e imágenes con bounding boxes).
+- `requirements.txt`: dependencias mínimas para correr inferencia local (`ultralytics`, `opencv-python`).
+- `.gitignore`: evita subir carpetas/archivos que se regeneran (venv, runs, etc).
+
+## Reproducibilidad (sin dataset)
+Este repo incluye el modelo (`best.pt`) + labels/resultados para demostrar el pipeline. El dataset original (`tomato_images/`) y la DB de Label Studio (`mydata/`) no se subieron para mantener el repo liviano.
+
+Si quieres replicar el entrenamiento con tu propio dataset, la estructura YOLO esperada es:
+
+dataset/
+images/
+train/
+val/
+labels/
+train/
+val/
+data.yaml
+
+
+## Google Colab (GPU) — configuración rápida
+Para entrenar en GPU:
+1. Colab → **Entorno de ejecución** → **Cambiar tipo de entorno de ejecución** → **Acelerador: GPU**
+2. Verifica GPU con:
+```bash
+!nvidia-smi
+Nota sobre thresholds (por qué conf=0.05)
+```
+Con solo 14 imágenes, el modelo puede ser sensible a umbrales altos. Por eso en inferencia se usa conf=0.05 para mejorar recall (detectar más casos) y luego se ajusta hacia arriba si se quiere menos falsos positivos.
+---
 
 ## Resultados rápidos
 Con un dataset pequeño, obtuve métricas buenas para demo:
