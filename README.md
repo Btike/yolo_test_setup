@@ -2,7 +2,7 @@
 
 Este repo documenta un demo rápido (y real) de **detección de objetos** usando **YOLO (Ultralytics)**.
 
-La idea no fue “state of the art”, sino demostrar que puedo moverme en el pipeline completo:
+La idea es “state of the art”, demostrar una demo en lo que es pipeline de datos:
 **data → labeling → export → train → eval → inference → demo**, aplicado a algo que después se puede escalar a robots/RPA.
 
 **Dataset:** 14 fotos, 1 clase (`Tomato`).
